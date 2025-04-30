@@ -1,0 +1,75 @@
+<%- include('partials/header') %>
+
+<div class="container mt-4">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover table-sm align-middle">
+      <thead class="table-primary text-center">
+        <tr>
+          <th>ID</th>
+          <th>Marca</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Modelo</th>
+          <th>Fecha de Lanzamiento</th>
+          <th>Almacenamiento</th>
+          <th>Sonido</th>
+          <th>Peso</th>
+          <th>Categoría</th>
+          <th>Operaciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% consolas.forEach(consola => { %>
+        <tr>
+          <td class="text-nowrap text-center"><%= consola.idconsola %></td>
+          <td class="text-nowrap"><%= consola.marca %></td>
+          <td class="text-nowrap"><%= consola.nombre %></td>
+          <td class="text-nowrap"><%= consola.descripcion %></td>
+          <td class="text-nowrap">S/ <%= Number(consola.precio).toFixed(2) %></td>
+          <td class="text-nowrap"><%= consola.modelo %></td>
+          <td class="text-nowrap text-center"><%= consola.alanzamiento %></td>
+          <td class="text-nowrap text-center"><%= consola.almacenamiento %></td>
+          <td class="text-nowrap"><%= consola.sonido %></td>
+          <td class="text-nowrap"><%= consola.peso %> kg</td>
+          <td class="text-nowrap"><%= consola.categoria %></td>
+          <td class="text-nowrap">
+            <div class="btn-group" role="group">
+                <a href="/edit/<%= consola.idconsola %>" class="btn btn-sm btn-info me-2">Editar</a>
+                <a href="/delete/<%= consola.idconsola %>" class="btn btn-sm btn-danger delete">Eliminar</a>
+            </div>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".delete").forEach(enlace => {
+      enlace.addEventListener("click", (event) => {
+        event.preventDefault();
+        Swal.fire({
+          title: 'Consola',
+          text: '¿Está seguro de eliminar esta consola?',
+          icon: 'question',
+          footer: 'Mundo Digital - Proyecto',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#2980b9',
+          showCancelButton: true,
+          cancelButtonText: 'Cancelar',
+          cancelButtonColor: '#c0392b'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = event.target.getAttribute("href");
+          }
+        });
+      });
+    });
+  });
+</script>
+
+<%- include('partials/footer') %>
