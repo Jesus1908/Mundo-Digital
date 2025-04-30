@@ -1,14 +1,17 @@
-CREATE TABLE marcas(
+CREATE DATABASE mundodigital;
+USE mundodigital;
+
+CREATE TABLE IF NOT EXISTS marcas(
   idmarca   INT PRIMARY KEY AUTO_INCREMENT,
   marca     VARCHAR(50) NOT NULL		
 ) ENGINE = INNODB;
 
-CREATE TABLE categorias( 
+CREATE TABLE IF NOT EXISTS categorias( 
   idcategoria	 INT PRIMARY KEY AUTO_INCREMENT,
   categoria	 VARCHAR(50) NOT NULL
 ) ENGINE = INNODB;
 
-CREATE TABLE consolas(
+CREATE TABLE IF NOT EXISTS consolas(
   idconsola			INT PRIMARY KEY AUTO_INCREMENT,
   nombre				VARCHAR(100) NOT NULL,
   descripcion     	VARCHAR(180) NOT NULL,
