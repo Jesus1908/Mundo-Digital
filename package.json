@@ -1,0 +1,23 @@
+{
+  "name": "mundo-digital",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jesus1908/Mundo-Digital.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jesus1908/Mundo-Digital/issues"
+  },
+  "homepage": "https://github.com/Jesus1908/Mundo-Digital#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
