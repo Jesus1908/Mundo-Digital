@@ -2,7 +2,18 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/database'); 
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res) => {  // Ruta principal '/'
+  try {
+    // Aquí solo renderizamos home.ejs sin consultar consolas
+    res.render('home');  // Renderiza 'home.ejs'
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al obtener la vista de inicio');
+  }
+});
+
+
+router.get('/index', async (req, res) => {  // Ruta '/index'
   try {
     const query = `
       SELECT 
@@ -22,12 +33,13 @@ router.get('/', async (req, res) => {
       INNER JOIN categorias CA ON C.idcategoria = CA.idcategoria
     `;
     const [consolas] = await db.query(query);
-    res.render('index', { consolas });
+    res.render('index', { consolas });  // Renderiza 'index.ejs' con la tabla de consolas
   } catch (error) {
     console.error(error);
     res.status(500).send('Error al obtener las consolas');
   }
 });
+
 
 //ruta para mostrar el formulario
 router.get('/create', async (req, res) => {
@@ -54,17 +66,18 @@ router.post('/create', async (req, res) => {
       [nombre, descripcion, precio, modelo, alanzamiento, almacenamiento, sonido, peso, idmarca, idcategoria]
     );
 
-    res.redirect('/');
+    res.redirect('/index');
   } catch (error) {
     console.error(error);
     res.status(500).send('Error al registrar la consola');
   }
 });
 
+//Elimnar registro
 router.get('/delete/:id', async (req, res) => {
   try {
     const [resultado] = await db.query("DELETE FROM consolas WHERE idconsola = ?", [req.params.id]);
-    res.redirect('/');
+    res.redirect('/index');
   } catch (error) {
     console.error(error);
   }
@@ -83,7 +96,7 @@ router.get('/edit/:id', async (req, res) => {
         consola: registro[0]
       });
     } else {
-      res.redirect('/');
+      res.redirect('/index');
     }
   } catch (error) {
     console.error(error);
@@ -125,7 +138,7 @@ router.post('/edit/:id', async (req, res) => {
       req.params.id
     ]);
 
-    res.redirect('/');
+    res.redirect('/index');
   } catch (error) {
     console.error('Error al editar consola:', error);
     res.status(500).send('Error del servidor');
