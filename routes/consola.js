@@ -1,4 +1,3 @@
-// routes/consola.js
 const express = require('express');
 const router = express.Router();
 const db = require('../config/database'); 
@@ -59,6 +58,15 @@ router.post('/create', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send('Error al registrar la consola');
+  }
+});
+
+router.get('/delete/:id', async (req, res) => {
+  try {
+    const [resultado] = await db.query("DELETE FROM consolas WHERE idconsola = ?", [req.params.id]);
+    res.redirect('/');
+  } catch (error) {
+    console.error(error);
   }
 });
 
