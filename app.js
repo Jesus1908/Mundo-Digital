@@ -23,5 +23,5 @@ app.use('/', rutaConsola); // Ruta principal que muestra consolas
 
 // Servidor Web
 app.listen(PORT, () => {
-  console.log(`Servidor iniciado en http://localhost:${PORT}`);
+  console.log(`Servidor iniciado en http://localhost:3000`);
 });
