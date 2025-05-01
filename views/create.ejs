@@ -1,0 +1,129 @@
+<%- include('partials/header') %>
+
+<form action="/create" id="formulario-registro" autocomplete="off" method="post">
+  <div class="card mt-2">
+    <div class="card-header"><strong>Registro de Consola</strong></div>
+
+    <div class="card-body">
+
+      <div class="row g-2">
+        <div class="col-md-6 mb-2">
+          <div class="form-floating">
+            <select name="idmarca" id="idmarca" class="form-select" required>
+              <option value="" selected disabled>Seleccione una marca</option>
+              <% marcas.forEach(marca => { %>
+                <option value="<%= marca.idmarca %>"><%= marca.marca %></option>
+              <% }) %>
+            </select>
+            <label>Marca</label>
+          </div>
+        </div>
+        <div class="col-md-6 mb-2">
+          <div class="form-floating">
+            <select name="idcategoria" id="idcategoria" class="form-select" required>
+              <option value="" selected disabled>Seleccione una categoría</option>
+              <% categorias.forEach(cat => { %>
+                <option value="<%= cat.idcategoria %>"><%= cat.categoria %></option>
+              <% }) %>
+            </select>
+            <label>Categoría</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-2">
+        <div class="col-md-6 mb-2">
+          <div class="form-floating">
+            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required>
+            <label>Nombre</label>
+          </div>
+        </div>
+        <div class="col-md-6 mb-2">
+          <div class="form-floating">
+            <input type="text" id="modelo" name="modelo" class="form-control" placeholder="Modelo" required>
+            <label>Modelo</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-2">
+        <div class="col-md-6 mb-2">
+          <div class="form-floating">
+            <input type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Descripción" required>
+            <label>Descripción</label>
+          </div>
+        </div>
+        <div class="col-md-6 mb-2">
+          <div class="form-floating">
+            <input type="number" step="0.01" id="precio" name="precio" class="form-control" placeholder="Precio" required>
+            <label>Precio</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-2">
+        <div class="col-md-6 mb-2">
+          <div class="form-floating">
+            <input type="text" minlength="4" maxlength="4" pattern="[0-9]+" id="alanzamiento" name="alanzamiento" class="form-control" placeholder="Año de fabricación" required>
+            <label>Fecha de Lanzamiento</label>
+          </div>
+        </div>
+        <div class="col-md-6 mb-2">
+          <div class="form-floating">
+            <input type="text" id="almacenamiento" name="almacenamiento" class="form-control" placeholder="Almacenamiento" required>
+            <label>Almacenamiento</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-2">
+        <div class="col-md-6 mb-2">
+          <div class="form-floating">
+            <input type="text" id="sonido" name="sonido" class="form-control" placeholder="Sonido" required>
+            <label>Sonido</label>
+          </div>
+        </div>
+        <div class="col-md-6 mb-2">
+          <div class="form-floating">
+            <input type="text" id="peso" name="peso" class="form-control" placeholder="Peso" required>
+            <label>Peso</label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card-footer">
+      <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+      <a href="/" class="btn btn-sm btn-secondary">Cancelar</a>
+    </div>
+  </div>
+</form>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const formulario = document.querySelector("#formulario-registro");
+
+    formulario.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      Swal.fire({
+        title: 'Consolas',
+        text: '¿Está seguro de registrar esta consola?',
+        icon: 'question',
+        footer: 'SENATI - Ingeniería Software',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#2980b9',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        cancelButtonColor: '#c0392b'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          formulario.submit();
+        }
+      });
+    });
+  });
+</script>
+
+<%- include('partials/footer') %>
