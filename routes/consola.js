@@ -37,10 +37,11 @@ router.get('/create', async (req, res) => {
     const [categorias] = await db.query("SELECT * FROM categorias");
     res.render('create', { marcas, categorias });
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Error al cargar formulario de creación');
+    console.error('Error al cargar el formulario de creación:', error);
+    res.status(500).send('Error al cargar formulario');
   }
 });
+
 
 //Guardar nuevo registro
 router.post('/create', async (req, res) => {
