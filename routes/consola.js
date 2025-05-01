@@ -70,5 +70,66 @@ router.get('/delete/:id', async (req, res) => {
   }
 });
 
+router.get('/edit/:id', async (req, res) => {
+  try {
+    const [marcas] = await db.query("SELECT * FROM marcas");
+    const [categorias] = await db.query("SELECT * FROM categorias");
+    const [registro] = await db.query("SELECT * FROM consolas WHERE idconsola = ?", [req.params.id]);
+
+    if (registro.length > 0) {
+      res.render('edit', {
+        marcas: marcas,
+        categorias: categorias,
+        consola: registro[0]
+      });
+    } else {
+      res.redirect('/');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al cargar el formulario de edición");
+  }
+});
+
+router.post('/edit/:id', async (req, res) => {
+  try {
+    const {
+      idmarca,
+      idcategoria,
+      nombre,
+      modelo,
+      descripcion,
+      precio,
+      alanzamiento,
+      almacenamiento,
+      sonido,
+      peso
+    } = req.body;
+
+    await db.query(`
+      UPDATE consolas 
+      SET idmarca = ?, idcategoria = ?, nombre = ?, modelo = ?, descripcion = ?, 
+          precio = ?, alanzamiento = ?, almacenamiento = ?, sonido = ?, peso = ?
+      WHERE idconsola = ?
+    `, [
+      idmarca,
+      idcategoria,
+      nombre,
+      modelo,
+      descripcion,
+      precio,
+      alanzamiento,
+      almacenamiento,
+      sonido,
+      peso,
+      req.params.id
+    ]);
+
+    res.redirect('/');
+  } catch (error) {
+    console.error('Error al editar consola:', error);
+    res.status(500).send('Error del servidor');
+  }
+});
 
 module.exports = router;
