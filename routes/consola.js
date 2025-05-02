@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/database'); 
 
-router.get('/', async (req, res) => {  // Ruta principal '/'
+router.get('/', async (req, res) => {  // Ruta principal /
   try {
-    // Aquí solo renderizamos home.ejs sin consultar consolas
-    res.render('home');  // Renderiza 'home.ejs'
+    // Obtener directamente el total de consolas
+    const [result] = await db.query('SELECT COUNT(*) AS total FROM consolas');
+    res.render('home', { total: result[0].total });  // Pasamos el total directamente a la vista home
   } catch (error) {
     console.error(error);
     res.status(500).send('Error al obtener la vista de inicio');
@@ -144,5 +145,36 @@ router.post('/edit/:id', async (req, res) => {
     res.status(500).send('Error del servidor');
   }
 });
+
+// Ruta para mostrar el catálogo
+router.get('/catalogo', async (req, res) => {
+  try {
+    // Aquí podrías hacer una consulta SQL para obtener los productos o consolas del catálogo
+    const query = `
+      SELECT 
+        C.idconsola,
+        C.nombre,
+        C.descripcion,
+        C.precio,
+        C.modelo,
+        C.alanzamiento,
+        C.almacenamiento,
+        C.sonido,
+        C.peso,
+        M.marca,
+        CA.categoria
+      FROM consolas C
+      INNER JOIN marcas M ON C.idmarca = M.idmarca
+      INNER JOIN categorias CA ON C.idcategoria = CA.idcategoria
+    `;
+    
+    const [consolas] = await db.query(query);
+    res.render('catalogo', { consolas });  // Renderiza la vista 'catalogo' y pasa la información de las consolas
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al obtener el catálogo');
+  }
+});
+
 
 module.exports = router;

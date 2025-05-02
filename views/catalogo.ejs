@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Consolas</title>
+  <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+<body>
+  <%- include('partials/header') %> <!-- Incluir el encabezado -->
+
+  <div class="container mt-4">
+    <h1>Catálogo de Consolas</h1>
+    <div class="row">
+      <% consolas.forEach(consola => { %>
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img src="<%= '/images/' + consola.imagen %>" class="card-img-top" alt="<%= consola.nombre %>">
+            <div class="card-body">
+              <h5 class="card-title"><%= consola.nombre %></h5>
+              <p class="card-text"><%= consola.descripcion %></p>
+              <p><strong>Precio:</strong> <%= consola.precio %> USD</p>
+              <a href="/edit/<%= consola.idconsola %>" class="btn btn-primary">Editar</a>
+              <a href="/delete/<%= consola.idconsola %>" class="btn btn-danger">Eliminar</a>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</body>
+</html>

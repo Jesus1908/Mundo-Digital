@@ -1,0 +1,9 @@
+ /* Clase para ajustar el tamaño de los elementos dentro del navbar*/
+.navbar * {
+  font-size: 25px;
+}
+
+/* Clase para mantener el tamaño del logo */
+.navbar-brand img {
+  width: 180px; 
+}
