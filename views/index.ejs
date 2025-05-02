@@ -16,11 +16,9 @@
           <th>Sonido</th>
           <th>Peso</th>
           <th>Categoría</th>
-          <th>Imagen</th> 
           <th>Operaciones</th>
         </tr>
       </thead>
-      
       <tbody>
         <% consolas.forEach(consola => { %>
         <tr>
@@ -30,14 +28,11 @@
           <td class="text-nowrap"><%= consola.descripcion %></td>
           <td class="text-nowrap">S/ <%= Number(consola.precio).toFixed(2) %></td>
           <td class="text-nowrap"><%= consola.modelo %></td>
-          <td class="text-nowrap text-center"><%= consola.alanzamiento || 'N/A' %></td>
-          <td class="text-nowrap text-center"><%= consola.almacenamiento || 'N/A' %></td>
-          <td class="text-nowrap"><%= consola.sonido || 'No disponible' %></td>
+          <td class="text-nowrap text-center"><%= consola.alanzamiento %></td>
+          <td class="text-nowrap text-center"><%= consola.almacenamiento %></td>
+          <td class="text-nowrap"><%= consola.sonido %></td>
           <td class="text-nowrap"><%= consola.peso %> kg</td>
           <td class="text-nowrap"><%= consola.categoria %></td>
-          <td class="text-center">
-            <img src="/images/consolas/<%= consola.imagen %>" alt="<%= consola.nombre %>" class="img-thumbnail" style="max-height: 60px;">
-          </td> 
           <td class="text-nowrap">
             <div class="btn-group" role="group">
                 <a href="/edit/<%= consola.idconsola %>" class="btn btn-sm btn-info me-2">Editar</a>
@@ -46,11 +41,11 @@
           </td>
         </tr>
         <% }) %>
-      </tbody>      
+      </tbody>
     </table>
   </div>
   <div class="text-end">
-    <a href="/" class="btn btn-success mt-3">Volver</a>
+    <a href="/create" class="btn btn-success mt-3">Registrar nueva consola</a>
   </div>
 </div>
 

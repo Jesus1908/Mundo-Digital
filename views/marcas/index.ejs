@@ -1,0 +1,72 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h3 class="mb-0"><i class="bi bi-tags"></i> Marcas</h3>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th class="text-center">ID</th>
+              <th class="text-center">Marca</th>
+              <th class="text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% marcas.forEach(marca => { %>
+            <tr>
+              <td class="text-center fw-bold"><%= marca.idmarca %></td>
+               <td class="text-center"><%= marca.marca %></td>
+              <td class="text-center">
+                <div class="btn-group">
+                  <a href="/marcas/edit/<%= marca.idmarca %>" class="btn btn-sm btn-info me-2">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                  <a href="/marcas/delete/<%= marca.idmarca %>" class="btn btn-sm btn-danger delete">
+                    <i class="bi bi-trash"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <div class="text-end mt-3">
+        <a href="/" class="btn btn-success">
+          <i class="bi bi-arrow-left"></i> Volver
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".delete").forEach(enlace => {
+      enlace.addEventListener("click", (event) => {
+        event.preventDefault();
+        Swal.fire({
+          title: 'Consola',
+          text: '¿Está seguro de eliminar esta marca?',
+          icon: 'question',
+          footer: 'Mundo Digital - Proyecto',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#2980b9',
+          showCancelButton: true,
+          cancelButtonText: 'Cancelar',
+          cancelButtonColor: '#c0392b'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = event.target.getAttribute("href");
+          }
+        });
+      });
+    });
+  });
+</script>
+
+<%- include('../partials/footer') %>

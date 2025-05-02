@@ -1,0 +1,56 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card border-primary">
+          <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">
+              <i class="bi bi-tag me-2"></i> Registro de marcas
+            </h3>
+          </div>
+          
+          <div class="card-body">
+            <form action="/marcas/edit/<%= marca.idmarca %>" id="formulario-edicion" autocomplete="off" method="post" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label class="form-label fw-bold">Nombre de la nueva marca</label>
+                <input type="text" name="marca" class="form-control border-primary"placeholder="Ingrese el nombre"required>
+              </div>
+              
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">
+                  <i class="bi bi-save me-2"></i> Guardar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault(); // Detenemos el envío
+      
+      const marcaInput = document.querySelector('input[name="marca"]');
+      const marcaValue = marcaInput.value.trim();
+    
+    
+      Swal.fire({
+        title: '¿Actualizar marca?',
+        text: `Nuevo valor: "${marcaValue}"`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Actualizar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.submit();
+        }
+      });
+    });
+    </script>
+<%- include('../partials/footer') %>

@@ -12,18 +12,17 @@ CREATE TABLE IF NOT EXISTS categorias(
 ) ENGINE = INNODB;
 
 CREATE TABLE IF NOT EXISTS consolas(
-  idconsola				    INT PRIMARY KEY AUTO_INCREMENT,
-  nombre				      VARCHAR(100) NOT NULL,
+  idconsola				INT PRIMARY KEY AUTO_INCREMENT,
+  nombre				VARCHAR(100) NOT NULL,
   descripcion     		VARCHAR(180) NOT NULL,
   precio          		DECIMAL(10,2) NOT NULL,
-  modelo				      VARCHAR(100) NOT NULL,
+  modelo				VARCHAR(100) NOT NULL,
   alanzamiento     		CHAR(4) NOT NULL,
-  almacenamiento      VARCHAR(50) NOT NULL,
-  sonido				      VARCHAR(50) NOT NULL,
-  peso					      DECIMAL(4,2) NOT NULL,
-  idmarca			      	INT,
+  almacenamiento        VARCHAR(50) NOT NULL,
+  sonido				VARCHAR(50) NOT NULL,
+  peso					DECIMAL(4,2) NOT NULL,
+  idmarca				INT,
   idcategoria     		INT,
-  imagen              VARCHAR(200),
   FOREIGN KEY (idmarca) REFERENCES marcas(idmarca),
   FOREIGN KEY (idcategoria) REFERENCES categorias(idcategoria)
 ) ENGINE = INNODB;
@@ -42,8 +41,10 @@ INSERT INTO categorias (categoria) VALUES
 ('Retro'),
 ('Mini');
 
-INSERT INTO consolas (nombre, descripcion, precio, modelo, alanzamiento, almacenamiento, sonido, peso, idmarca, idcategoria, imagen) VALUES
-('PlayStation 5', 'Consola de videojuegos de nueva generación de Sony.', 499.99, 'PS5', '2020', '825GB', 'DTS:X', 4.5, 1, 2, 'ps5.jpg'),
-('Xbox Series X', 'Consola de videojuegos de Microsoft con gran rendimiento.', 499.99, 'XSX', '2023', '1TB', 'Dolby Atmos', 4.4, 2, 2, 'xsx.jpg'),
-('Nintendo Switch', 'Consola híbrida de Nintendo, portátil y de sobremesa.', 299.99, 'NSW', '2017', '32GB', 'Stereo', 0.3, 3, 3, 'nsw.jpg');
-SELECT * FROM consolas;
+INSERT INTO consolas (nombre, descripcion, precio, modelo, alanzamiento, almacenamiento, sonido, peso, idmarca, idcategoria) VALUES
+('PlayStation 5', 'Consola de videojuegos de nueva generación de Sony.', 499.99, 'PS5', '2020', '825GB', 'DTS:X', 4.5, 1, 2),
+('Xbox Series X', 'Consola de videojuegos de Microsoft con gran rendimiento.', 499.99, 'XSX', '2023', '1TB', 'Dolby Atmos', 4.4, 2, 2),
+('Nintendo Switch', 'Consola híbrida de Nintendo, portátil y de sobremesa.', 299.99, 'NSW', '2017', '32GB', 'Stereo', 0.3, 3, 3),
+('Xbox Series S', 'Versión más económica de la Xbox Series X.', 299.99, 'XSS', '2020', '512GB', 'Dolby Atmos', 2.3, 2, 2),
+('Nintendo Switch Lite', 'Versión más económica y compacta de la Nintendo Switch.', 199.99, 'NSWL', '2019', '32GB', 'Stereo', 0.3, 3, 1);
+select * from consolas;
