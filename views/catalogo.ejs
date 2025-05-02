@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/public/css/styles.css">
 </head>
 <body>
-  <%- include('partials/header') %> <!-- Incluir el encabezado -->
+  <%- include('partials/header') %> 
 
   <div class="container mt-4">
     <h1>Catálogo de Consolas</h1>
@@ -15,7 +15,7 @@
       <% consolas.forEach(consola => { %>
         <div class="col-md-4">
           <div class="card mb-4">
-            <img src="<%= '/images/' + consola.imagen %>" class="card-img-top" alt="<%= consola.nombre %>">
+            <img src="<%= '/images/consolas/' + consola.imagen %>" class="card-img-top" alt="<%= consola.nombre %>">
             <div class="card-body">
               <h5 class="card-title"><%= consola.nombre %></h5>
               <p class="card-text"><%= consola.descripcion %></p>
