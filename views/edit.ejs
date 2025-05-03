@@ -1,10 +1,12 @@
 <%- include('partials/header') %>
 
-<form action="/videojuegos/update/<%= videojuego.idvideojuego %>" id="formulario-edicion" autocomplete="off" method="post">
+<form action="/update/<%= videojuego.idvideojuego %>" id="formulario-edicion" autocomplete="off" method="post" enctype="multipart/form-data">
   <div class="card mt-2">
     <div class="card-header"><strong>Actualización de Videojuego</strong></div>
 
     <div class="card-body">
+      <!-- Campo oculto para enviar la imagen actual -->
+      <input type="hidden" name="imagenActual" value="<%= videojuego.imagen %>">
 
       <div class="row g-2">
         <div class="col-md-6 mb-2">
@@ -83,12 +85,11 @@
         </div>
         <div class="col-md-6 mb-2">
           <div class="form-floating">
-            <input type="text" id="imagen" name="imagenActual" value="<%= videojuego.imagen %>" class="form-control" placeholder="Nombre de la imagen">
-            <label>Archivo de Imagen</label>
+            <input type="file" id="imagenNueva" name="imagenNueva" class="form-control" accept="image/*">
+            <label>Subir Nueva Imagen</label>
           </div>
         </div>
       </div>
-
     </div>
 
     <div class="card-footer">

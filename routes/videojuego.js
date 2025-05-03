@@ -136,68 +136,34 @@ router.get('/edit/:id', async (req, res) => {
 
 
 // Ruta para guardar las imágenes subidas
-const uploadPath = path.join(__dirname, 'public', 'images');
-
-router.post('/update/:id', upload.single('imagen'), async (req, res) => {
+router.post('/update/:id', upload.single('imagenNueva'), async (req, res) => {
   try {
-    const { 
-      idmarca, 
-      idcategoria, 
-      titulo, 
-      descripcion, 
-      precio, 
-      flanzamiento, 
-      edadrec, 
-      peso 
-    } = req.body;
-    
-    let imagen = req.file ? req.file.filename : req.body.imagenActual;
+    const { titulo, descripcion, precio, flanzamiento, peso, edadrec, idmarca, idcategoria, imagenActual } = req.body;
+    let nuevaImagen = imagenActual; // Por defecto, conserva la imagen actual
 
-    // Manejo de la imagen anterior si se sube una nueva
+    // Si se subió una nueva imagen, actualiza el nombre de la imagen
     if (req.file) {
-      const [oldVideojuego] = await db.query('SELECT imagen FROM videojuegos WHERE idvideojuego = ?', [req.params.id]);
-      if (oldVideojuego[0].imagen) {
-        const oldImagePath = path.join(uploadPath, oldVideojuego[0].imagen);
-        if (fs.existsSync(oldImagePath)) {
-          fs.unlinkSync(oldImagePath);
-        }
+      nuevaImagen = req.file.filename;
+
+      // Opcional: Elimina la imagen anterior del servidor
+      const rutaImagenAnterior = path.join(__dirname, '../public/images/videojuegos', imagenActual);
+      if (fs.existsSync(rutaImagenAnterior)) {
+        fs.unlinkSync(rutaImagenAnterior);
       }
     }
 
-    // Realizar la actualización
-    await db.query(`
-      UPDATE videojuegos 
-      SET 
-        idmarca = ?, 
-        idcategoria = ?, 
-        titulo = ?, 
-        descripcion = ?, 
-        precio = ?, 
-        flanzamiento = ?, 
-        edadrec = ?, 
-        peso = ?, 
-        imagen = ?
+    // Actualiza los datos en la base de datos
+    await db.query(
+      `UPDATE videojuegos 
+      SET idmarca = ?, idcategoria = ?, titulo = ?, descripcion = ?, precio = ?, flanzamiento = ?, edadrec = ?, peso = ?, imagen = ?
       WHERE idvideojuego = ?`,
-      [
-        idmarca,
-        idcategoria,
-        titulo,
-        descripcion,
-        precio,
-        flanzamiento,
-        edadrec,
-        peso,
-        imagen,
-        req.params.id
-      ]
+      [idmarca, idcategoria, titulo, descripcion, parseFloat(precio), flanzamiento, edadrec, peso, nuevaImagen, req.params.id]
     );
-    
-    res.redirect('/videojuegos'); // Redirige al listado de videojuegos
+
+    res.redirect('/');
   } catch (error) {
-    console.error('Error al editar videojuego:', error);
-    res.status(500).send('Error del servidor');
+    res.redirect('/'); 
   }
 });
-
 
 module.exports = router;
