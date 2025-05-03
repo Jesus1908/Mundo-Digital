@@ -140,7 +140,7 @@ router.post('/update/:id', upload.single('imagenNueva'), async (req, res) => {
   try {
     const { titulo, descripcion, precio, flanzamiento, peso, edadrec, idmarca, idcategoria, imagenActual } = req.body;
     let nuevaImagen = imagenActual; 
-
+    
     if (req.file) {
       nuevaImagen = req.file.filename;
 
@@ -149,6 +149,7 @@ router.post('/update/:id', upload.single('imagenNueva'), async (req, res) => {
         fs.unlinkSync(rutaImagenAnterior);
       }
     }
+
     await db.query(
       `UPDATE videojuegos 
       SET idmarca = ?, idcategoria = ?, titulo = ?, descripcion = ?, precio = ?, flanzamiento = ?, edadrec = ?, peso = ?, imagen = ?
@@ -162,7 +163,6 @@ router.post('/update/:id', upload.single('imagenNueva'), async (req, res) => {
   }
 });
 
-// Ruta para mostrar el catálogo
 router.get('/catalogo', async (req, res) => {
   try {
     const { titulo, marca, categoria } = req.query;
@@ -203,7 +203,7 @@ router.get('/catalogo', async (req, res) => {
     }
 
     const [videojuegos] = await db.query(query, params);
-    // Obtener marcas y categorías para el filtro
+
     const [marcas] = await db.query(`SELECT DISTINCT marca FROM marcas`);
     const [categorias] = await db.query(`SELECT DISTINCT categoria FROM categorias`);
 
