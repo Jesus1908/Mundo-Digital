@@ -1,11 +1,13 @@
 <%- include('partials/header') %>
 
-<form action="/create" id="formulario-registro" autocomplete="off" method="post">
-  <div class="card mt-2">
-    <div class="card-header"><strong>Registro de Consola</strong></div>
+<form action="/create" id="formulario-registro" autocomplete="off" method="post" enctype="multipart/form-data">
+  <div class="card mt-2 shadow">
+    <div class="card-header bg-primary text-white">
+      <strong>Registro de Videojuego</strong>
+    </div>
 
     <div class="card-body">
-
+      <!-- Primera fila: Marca y Categoría -->
       <div class="row g-2">
         <div class="col-md-6 mb-2">
           <div class="form-floating">
@@ -15,7 +17,7 @@
                 <option value="<%= marca.idmarca %>"><%= marca.marca %></option>
               <% }) %>
             </select>
-            <label>Marca</label>
+            <label for="idmarca">Marca</label>
           </div>
         </div>
         <div class="col-md-6 mb-2">
@@ -26,76 +28,71 @@
                 <option value="<%= cat.idcategoria %>"><%= cat.categoria %></option>
               <% }) %>
             </select>
-            <label>Categoría</label>
+            <label for="idcategoria">Categoría</label>
           </div>
         </div>
       </div>
 
+      <!-- Segunda fila: Título y Precio -->
       <div class="row g-2">
-        <div class="col-md-6 mb-2">
+        <div class="col-md-8 mb-2">
           <div class="form-floating">
-            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required>
-            <label>Nombre</label>
+            <input type="text" id="titulo" name="titulo" class="form-control" placeholder="Título del juego" required>
+            <label for="titulo">Título</label>
           </div>
         </div>
-        <div class="col-md-6 mb-2">
+        <div class="col-md-4 mb-2">
           <div class="form-floating">
-            <input type="text" id="modelo" name="modelo" class="form-control" placeholder="Modelo" required>
-            <label>Modelo</label>
+            <input type="number" step="0.01" id="precio" name="precio" class="form-control" placeholder="Precio" min="0" required>
+            <label for="precio">Precio ($)</label>
           </div>
         </div>
       </div>
 
-      <div class="row g-2">
-        <div class="col-md-6 mb-2">
-          <div class="form-floating">
-            <input type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Descripción" required>
-            <label>Descripción</label>
-          </div>
-        </div>
-        <div class="col-md-6 mb-2">
-          <div class="form-floating">
-            <input type="number" step="0.01" id="precio" name="precio" class="form-control" placeholder="Precio" required>
-            <label>Precio</label>
-          </div>
+      <!-- Tercera fila: Descripción -->
+      <div class="mb-2">
+        <div class="form-floating">
+          <textarea id="descripcion" name="descripcion" class="form-control" placeholder="Descripción" style="height: 100px" required></textarea>
+          <label for="descripcion">Descripción</label>
         </div>
       </div>
 
+      <!-- Cuarta fila: Detalles técnicos -->
       <div class="row g-2">
-        <div class="col-md-6 mb-2">
+        <div class="col-md-3 mb-2">
           <div class="form-floating">
-            <input type="text" minlength="4" maxlength="4" pattern="[0-9]+" id="alanzamiento" name="alanzamiento" class="form-control" placeholder="Año de fabricación" required>
-            <label>Fecha de Lanzamiento</label>
+            <input type="text" minlength="4" maxlength="4" pattern="[0-9]+" id="flanzamiento" name="flanzamiento" class="form-control" placeholder="Año" required>
+            <label for="flanzamiento">Año Lanzamiento</label>
           </div>
         </div>
-        <div class="col-md-6 mb-2">
-          <div class="form-floating">
-            <input type="text" id="almacenamiento" name="almacenamiento" class="form-control" placeholder="Almacenamiento" required>
-            <label>Almacenamiento</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="row g-2">
-        <div class="col-md-6 mb-2">
-          <div class="form-floating">
-            <input type="text" id="sonido" name="sonido" class="form-control" placeholder="Sonido" required>
-            <label>Sonido</label>
-          </div>
-        </div>
-        <div class="col-md-6 mb-2">
+        <div class="col-md-3 mb-2">
           <div class="form-floating">
             <input type="text" id="peso" name="peso" class="form-control" placeholder="Peso" required>
-            <label>Peso</label>
+            <label for="peso">Peso (GB)</label>
+          </div>
+        </div>
+        <div class="col-md-3 mb-2">
+          <div class="form-floating">
+            <input type="number" id="edadrec" name="edadrec" class="form-control" placeholder="Edad" min="3" max="18" required>
+            <label for="edadrec">Edad Recomendada</label>
+          </div>
+        </div>
+        <div class="col-md-3 mb-2">
+          <div class="form-floating">
+            <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*" required>
+            <label for="imagen">Portada</label>
           </div>
         </div>
       </div>
-
     </div>
 
-    <div class="card-footer">
-      <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
-      <a href="/index" class="btn btn-sm btn-secondary">Cancelar</a>
+    <div class="card-footer text-end">
+      <button type="submit" class="btn btn-primary">
+        <i class="bi bi-save"></i> Guardar
+      </button>
+      <a href="/videojuegos" class="btn btn-secondary">
+        <i class="bi bi-x-circle"></i> Cancelar
+      </a>
     </div>
   </div>
 </form>
@@ -107,14 +104,16 @@
     formulario.addEventListener("submit", (event) => {
       event.preventDefault();
 
+      const titulo = document.getElementById('titulo').value;
+      
       Swal.fire({
-        title: 'Consolas',
-        text: '¿Está seguro de registrar esta consola?',
+        title: 'Registrar Videojuego',
+        text: `¿Desea registrar "${titulo}"?`,
         icon: 'question',
-        footer: 'SENATI - Ingeniería Software',
-        confirmButtonText: 'Aceptar',
-        confirmButtonColor: '#2980b9',
+        footer: 'Mundo Digital - Catálogo',
         showCancelButton: true,
+        confirmButtonText: 'Confirmar',
+        confirmButtonColor: '#2980b9',
         cancelButtonText: 'Cancelar',
         cancelButtonColor: '#c0392b'
       }).then((result) => {

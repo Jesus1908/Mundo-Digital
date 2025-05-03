@@ -6,37 +6,37 @@
       <thead class="table-primary text-center">
         <tr>
           <th>ID</th>
-          <th>Marca</th>
-          <th>Nombre</th>
+          <th>Título</th>
           <th>Descripción</th>
           <th>Precio</th>
-          <th>Modelo</th>
           <th>Fecha de Lanzamiento</th>
           <th>Almacenamiento</th>
-          <th>Sonido</th>
-          <th>Peso</th>
+          <th>Edad Recomendada</th>
+          <th>Marca</th>
           <th>Categoría</th>
+          <th>Imagen</th>
           <th>Operaciones</th>
         </tr>
       </thead>
       <tbody>
-        <% consolas.forEach(consola => { %>
+        <% videojuegos.forEach(videojuego => { %>
         <tr>
-          <td class="text-nowrap text-center"><%= consola.idconsola %></td>
-          <td class="text-nowrap"><%= consola.marca %></td>
-          <td class="text-nowrap"><%= consola.nombre %></td>
-          <td class="text-nowrap"><%= consola.descripcion %></td>
-          <td class="text-nowrap">S/ <%= Number(consola.precio).toFixed(2) %></td>
-          <td class="text-nowrap"><%= consola.modelo %></td>
-          <td class="text-nowrap text-center"><%= consola.alanzamiento %></td>
-          <td class="text-nowrap text-center"><%= consola.almacenamiento %></td>
-          <td class="text-nowrap"><%= consola.sonido %></td>
-          <td class="text-nowrap"><%= consola.peso %> kg</td>
-          <td class="text-nowrap"><%= consola.categoria %></td>
+          <td class="text-nowrap text-center"><%= videojuego.idvideojuego %></td>
+          <td class="text-nowrap"><%= videojuego.titulo %></td>
+          <td class="text-nowrap"><%= videojuego.descripcion %></td>
+          <td class="text-nowrap">S/ <%= Number(videojuego.precio).toFixed(2) %></td>
+          <td class="text-nowrap text-center"><%= videojuego.flanzamiento %></td>
+          <td class="text-nowrap"><%= videojuego.peso %> kg</td>
+          <td class="text-nowrap"><%= videojuego.edadrec %></td>
+          <td class="text-nowrap"><%= videojuego.marca %></td>
+          <td class="text-nowrap"><%= videojuego.categoria %></td>
+          <td class="text-nowrap text-center">
+            <img src="/images/videojuegos/<%= videojuego.imagen %>" alt="Imagen" width="60" height="60">
+          </td>
           <td class="text-nowrap">
             <div class="btn-group" role="group">
-                <a href="/edit/<%= consola.idconsola %>" class="btn btn-sm btn-info me-2">Editar</a>
-                <a href="/delete/<%= consola.idconsola %>" class="btn btn-sm btn-danger delete">Eliminar</a>
+              <a href="/edit/<%= videojuego.idvideojuego %>" class="btn btn-sm btn-info me-2">Editar</a>
+              <a href="/delete/<%= videojuego.idvideojuego %>" class="btn btn-sm btn-danger delete">Eliminar</a>
             </div>
           </td>
         </tr>
@@ -56,7 +56,7 @@
         event.preventDefault();
         Swal.fire({
           title: 'Consola',
-          text: '¿Está seguro de eliminar esta consola?',
+          text: '¿Está seguro de eliminar esta videojuego?',
           icon: 'question',
           footer: 'Mundo Digital - Proyecto',
           confirmButtonText: 'Aceptar',

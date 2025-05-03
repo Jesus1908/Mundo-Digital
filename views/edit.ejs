@@ -1,8 +1,8 @@
 <%- include('partials/header') %>
 
-<form action="/edit/<%= consola.idconsola %>" id="formulario-edicion" autocomplete="off" method="post">
+<form action="/videojuegos/update/<%= videojuego.idvideojuego %>" id="formulario-edicion" autocomplete="off" method="post">
   <div class="card mt-2">
-    <div class="card-header"><strong>Actualización de Consola</strong></div>
+    <div class="card-header"><strong>Actualización de Videojuego</strong></div>
 
     <div class="card-body">
 
@@ -12,7 +12,9 @@
             <select name="idmarca" id="idmarca" class="form-select" required>
               <option value="" disabled>Seleccione una marca</option>
               <% marcas.forEach(marca => { %>
-                <option value="<%= marca.idmarca %>" <%= marca.idmarca == consola.idmarca ? 'selected' : '' %>><%= marca.marca %></option>
+                <option value="<%= marca.idmarca %>" <%= marca.idmarca == videojuego.idmarca ? 'selected' : '' %>>
+                  <%= marca.marca %>
+                </option>
               <% }) %>
             </select>
             <label>Marca</label>
@@ -23,7 +25,9 @@
             <select name="idcategoria" id="idcategoria" class="form-select" required>
               <option value="" disabled>Seleccione una categoría</option>
               <% categorias.forEach(cat => { %>
-                <option value="<%= cat.idcategoria %>" <%= cat.idcategoria == consola.idcategoria ? 'selected' : '' %>><%= cat.categoria %></option>
+                <option value="<%= cat.idcategoria %>" <%= cat.idcategoria == videojuego.idcategoria ? 'selected' : '' %>>
+                  <%= cat.categoria %>
+                </option>
               <% }) %>
             </select>
             <label>Categoría</label>
@@ -32,31 +36,40 @@
       </div>
 
       <div class="row g-2">
-        <div class="col-md-6 mb-2">
+        <div class="col-md-12 mb-2">
           <div class="form-floating">
-            <input type="text" id="nombre" name="nombre" value="<%= consola.nombre %>" class="form-control" placeholder="Nombre" required>
-            <label>Nombre</label>
-          </div>
-        </div>
-        <div class="col-md-6 mb-2">
-          <div class="form-floating">
-            <input type="text" id="modelo" name="modelo" value="<%= consola.modelo %>" class="form-control" placeholder="Modelo" required>
-            <label>Modelo</label>
+            <input type="text" id="titulo" name="titulo" value="<%= videojuego.titulo %>" class="form-control" placeholder="Título" required>
+            <label>Título del Videojuego</label>
           </div>
         </div>
       </div>
 
       <div class="row g-2">
-        <div class="col-md-6 mb-2">
+        <div class="col-md-12 mb-2">
           <div class="form-floating">
-            <input type="text" id="descripcion" name="descripcion" value="<%= consola.descripcion %>" class="form-control" placeholder="Descripción" required>
+            <textarea id="descripcion" name="descripcion" class="form-control" placeholder="Descripción" style="height: 100px" required><%= videojuego.descripcion %></textarea>
             <label>Descripción</label>
           </div>
         </div>
-        <div class="col-md-6 mb-2">
+      </div>
+
+      <div class="row g-2">
+        <div class="col-md-4 mb-2">
           <div class="form-floating">
-            <input type="number" step="0.01" id="precio" name="precio" value="<%= consola.precio %>" class="form-control" placeholder="Precio" required>
-            <label>Precio</label>
+            <input type="number" step="0.01" id="precio" name="precio" value="<%= videojuego.precio %>" class="form-control" placeholder="Precio" required>
+            <label>Precio ($)</label>
+          </div>
+        </div>
+        <div class="col-md-4 mb-2">
+          <div class="form-floating">
+            <input type="text" minlength="4" maxlength="4" pattern="[0-9]+" id="flanzamiento" name="flanzamiento" value="<%= videojuego.flanzamiento %>" class="form-control" placeholder="Año de lanzamiento" required>
+            <label>Año de Lanzamiento</label>
+          </div>
+        </div>
+        <div class="col-md-4 mb-2">
+          <div class="form-floating">
+            <input type="number" id="edadrec" name="edadrec" value="<%= videojuego.edadrec %>" class="form-control" placeholder="Edad recomendada" required>
+            <label>Edad Recomendada</label>
           </div>
         </div>
       </div>
@@ -64,29 +77,14 @@
       <div class="row g-2">
         <div class="col-md-6 mb-2">
           <div class="form-floating">
-            <input type="text" minlength="4" maxlength="4" pattern="[0-9]+" id="alanzamiento" name="alanzamiento" value="<%= consola.alanzamiento %>" class="form-control" placeholder="Año de fabricación" required>
-            <label>Fecha de Lanzamiento</label>
+            <input type="text" id="peso" name="peso" value="<%= videojuego.peso %>" class="form-control" placeholder="Peso" required>
+            <label>Peso (GB)</label>
           </div>
         </div>
         <div class="col-md-6 mb-2">
           <div class="form-floating">
-            <input type="text" id="almacenamiento" name="almacenamiento" value="<%= consola.almacenamiento %>" class="form-control" placeholder="Almacenamiento" required>
-            <label>Almacenamiento</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="row g-2">
-        <div class="col-md-6 mb-2">
-          <div class="form-floating">
-            <input type="text" id="sonido" name="sonido" value="<%= consola.sonido %>" class="form-control" placeholder="Sonido" required>
-            <label>Sonido</label>
-          </div>
-        </div>
-        <div class="col-md-6 mb-2">
-          <div class="form-floating">
-            <input type="text" id="peso" name="peso" value="<%= consola.peso %>" class="form-control" placeholder="Peso" required>
-            <label>Peso</label>
+            <input type="text" id="imagen" name="imagenActual" value="<%= videojuego.imagen %>" class="form-control" placeholder="Nombre de la imagen">
+            <label>Archivo de Imagen</label>
           </div>
         </div>
       </div>
@@ -95,7 +93,7 @@
 
     <div class="card-footer">
       <button type="submit" class="btn btn-sm btn-primary">Guardar Cambios</button>
-      <a href="/index" class="btn btn-sm btn-secondary">Cancelar</a>
+      <a href="/videojuegos" class="btn btn-sm btn-secondary">Cancelar</a>
     </div>
   </div>
 </form>
@@ -108,8 +106,8 @@
       event.preventDefault();
 
       Swal.fire({
-        title: 'Consolas',
-        text: '¿Está seguro de actualizar esta consola?',
+        title: 'Videojuegos',
+        text: '¿Está seguro de actualizar este videojuego?',
         icon: 'question',
         footer: 'SENATI - Ingeniería Software',
         confirmButtonText: 'Aceptar',

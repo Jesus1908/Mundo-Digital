@@ -6,22 +6,19 @@
       <div class="card border-primary">
         <div class="card-header bg-primary text-white">
           <h3 class="mb-0">
-            <i class="bi bi-tag me-2"></i> Editar Marca: <%= marca.marca %>
+            <i class="bi bi-tag me-2"></i> Editar Categoria: <%= categoria.categoria %>
           </h3>
         </div>
         
         <div class="card-body">
-          <!-- Cambios importantes: -->
-          <!-- 1. Quitamos enctype="multipart/form-data" (no necesario para texto) -->
-          <!-- 2. Añadimos value con el dato actual -->
-          <form action="/marcas/edit/<%= marca.idmarca %>" method="POST" id="formulario-edicion">
+          <form action="/categorias/edit/<%= categoria.idcategoria %>" method="POST" id="formulario-edicion">
             <div class="mb-3">
-              <label class="form-label fw-bold">Nombre de la marca</label>
+              <label class="form-label fw-bold">Nombre de la categoria</label>
               <input 
                 type="text" 
-                name="marca" 
+                name="categoria" 
                 class="form-control border-primary" 
-                value="<%= marca.marca %>"
+                value="<%= categoria.categoria %>"
                 placeholder="Ingrese el nombre" 
                 required
               >
@@ -43,11 +40,11 @@
   document.getElementById('formulario-edicion').addEventListener('submit', function(e) {
     e.preventDefault();
     
-    const marcaValue = document.querySelector('input[name="marca"]').value.trim();
+    const categoriaValue = document.querySelector('input[name="categoria"]').value.trim();
     
     Swal.fire({
-      title: '¿Actualizar marca?',
-      text: `Cambiar a: "${marcaValue}"`,
+      title: '¿Actualizar categoria?',
+      text: `Cambiar a: "${categoriaValue}"`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

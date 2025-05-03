@@ -3,7 +3,7 @@
 <div class="container mt-4">
   <div class="card shadow-sm">
     <div class="card-header bg-primary text-white">
-      <h3 class="mb-0"><i class="bi bi-tags"></i> Marcas</h3>
+      <h3 class="mb-0"><i class="bi bi-tags"></i> Categorias</h3>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -11,19 +11,19 @@
           <thead class="table-dark">
             <tr>
               <th class="text-center">ID</th>
-              <th class="text-center">Marca</th>
+              <th class="text-center">Categoria</th>
               <th class="text-center">Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <% marcas.forEach(marca => { %>
+            <% categorias.forEach(categoria => { %>
             <tr>
-              <td class="text-center fw-bold"><%= marca.idmarca %></td>
-               <td class="text-center"><%= marca.marca %></td>
+              <td class="text-center fw-bold"><%= categoria.idcategoria %></td>
+               <td class="text-center"><%= categoria.categoria %></td>
               <td class="text-center">
                 <div class="btn-group">
-                  <a href="/marcas/edit/<%= marca.idmarca %>" class="btn btn-sm btn-info me-2">Editar</a>
-                  <a href="/marcas/delete/<%= marca.idmarca %>" class="btn btn-sm btn-danger delete">Eliminar</a>
+                  <a href="/categorias/edit/<%= categoria.idcategoria %>" class="btn btn-sm btn-info me-2">Editar</a>
+                  <a href="/categorias/delete/<%= categoria.idcategoria %>" class="btn btn-sm btn-danger delete">Eliminar</a>
                 </div>
               </td>
             </tr>
@@ -47,7 +47,7 @@
         event.preventDefault();
         Swal.fire({
           title: 'Consola',
-          text: '¿Está seguro de eliminar esta marca?',
+          text: '¿Está seguro de eliminar esta categoria?',
           icon: 'question',
           footer: 'Mundo Digital - Proyecto',
           confirmButtonText: 'Aceptar',
