@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../config/database');
 const upload = require('../config/multer');
 const fs = require('fs'); 
-const path = require('path'); // Agrega esto al inicio del archivo
+const path = require('path'); 
 
 //ruta para obtener el total de registros en home
 router.get('/', async (req, res) => {
@@ -84,7 +84,7 @@ router.post('/create', upload.single('imagen'), async (req, res) => {
   } catch (error) {
     console.error('Error al registrar videojuego:', error);
     
-    // Manejo específico para errores de duplicados
+    // Manejo para errores de duplicados
     if (error.code === 'ER_DUP_ENTRY') {
       return res.status(400).render('videojuegos/create', {
         error: 'Este videojuego ya existe',
@@ -113,7 +113,7 @@ router.get('/delete/:id', async (req, res) => {
   }
 });
 
-// Ruta para mostrar el formulario y editar
+// Ruta para mostrar el formulario d edit
 router.get('/edit/:id', async (req, res) => {
   try {
     const [marcas] = await db.query("SELECT * FROM marcas");
@@ -139,20 +139,16 @@ router.get('/edit/:id', async (req, res) => {
 router.post('/update/:id', upload.single('imagenNueva'), async (req, res) => {
   try {
     const { titulo, descripcion, precio, flanzamiento, peso, edadrec, idmarca, idcategoria, imagenActual } = req.body;
-    let nuevaImagen = imagenActual; // Por defecto, conserva la imagen actual
+    let nuevaImagen = imagenActual; 
 
-    // Si se subió una nueva imagen, actualiza el nombre de la imagen
     if (req.file) {
       nuevaImagen = req.file.filename;
 
-      // Opcional: Elimina la imagen anterior del servidor
       const rutaImagenAnterior = path.join(__dirname, '../public/images/videojuegos', imagenActual);
       if (fs.existsSync(rutaImagenAnterior)) {
         fs.unlinkSync(rutaImagenAnterior);
       }
     }
-
-    // Actualiza los datos en la base de datos
     await db.query(
       `UPDATE videojuegos 
       SET idmarca = ?, idcategoria = ?, titulo = ?, descripcion = ?, precio = ?, flanzamiento = ?, edadrec = ?, peso = ?, imagen = ?
@@ -207,8 +203,7 @@ router.get('/catalogo', async (req, res) => {
     }
 
     const [videojuegos] = await db.query(query, params);
-
-    // Obtener todas las marcas y categorías para el formulario
+    // Obtener marcas y categorías para el filtro
     const [marcas] = await db.query(`SELECT DISTINCT marca FROM marcas`);
     const [categorias] = await db.query(`SELECT DISTINCT categoria FROM categorias`);
 

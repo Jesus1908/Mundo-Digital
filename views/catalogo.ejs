@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catálogo de Videojuegos</title>
   <link rel="stylesheet" href="/public/css/styles.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  <%- include('partials/header') %> <!-- Incluir el encabezado -->
+  <%- include('partials/header') %> 
 
   <div class="container mt-4">
     <h1 class="text-center text-primary mb-4">Catálogo de Videojuegos</h1>
@@ -40,24 +39,24 @@
       <button type="submit" class="btn btn-primary">Filtrar</button>
     </div>
   </form>
-  
+
     <div class="row g-4">
       <% videojuegos.forEach(videojuego => { %>
         <div class="col-md-4 d-flex align-items-stretch">
           <div class="card shadow-sm h-100">
-            <!-- Encabezado de la tarjeta -->
+            <!-- Encabezado dell card -->
             <div class="card-header bg-primary text-white text-center">
               <h5 class="mb-0"><%= videojuego.titulo %></h5>
             </div>
             <!-- Imagen del videojuego -->
             <img src="/images/videojuegos/<%= videojuego.imagen || 'placeholder.jpg' %>" class="card-img-top" alt="<%= videojuego.nombre %>" onerror="this.src='/images/videojuegos/placeholder.jpg'">
             <div class="card-body">
-              <!-- Contenedor para las insignias -->
+              <!-- Contenedor de las insignias -->
               <div class="d-flex justify-content-center mb-3">
                 <!-- Marca destacada -->
-                <span class="badge bg-success me-2 text-uppercase">Marca: <%= videojuego.marca %></span>
+                <span class="badge bg-success me-2 text-uppercase"><%= videojuego.marca %></span>
                 <!-- Categoría destacada -->
-                <span class="badge bg-warning text-dark text-uppercase">Categoría: <%= videojuego.categoria %></span>
+                <span class="badge bg-warning text-dark text-uppercase"><%= videojuego.categoria %></span>
               </div>
               <!-- Descripción -->
               <p class="card-text text-muted">
@@ -71,7 +70,7 @@
               <p class="text-primary">
                 <i class="bi bi-calendar-event"></i> Lanzamiento: <%= videojuego.flanzamiento %>
               </p>
-              <!-- Peso -->
+              <!-- Peso o almacenamiento-->
               <p class="text-secondary">
                 <i class="bi bi-hdd"></i> Peso: <%= videojuego.peso %> kg
               </p>

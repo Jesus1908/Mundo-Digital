@@ -15,12 +15,11 @@ router.get('/', async (req, res) => {
     }
   });
 
-// Mostrar formulario (GET /marcas/create)
 router.get('/create', (req, res) => {
     res.render('marcas/create');
   });
   
-  // Guardar marca (POST /marcas/create)
+  // Guardar marca 
 router.post('/create', async (req, res) => {
     try {
       const { marca } = req.body;
@@ -32,17 +31,16 @@ router.post('/create', async (req, res) => {
     }
   });
 
-// Eliminar marca (GET /marcas/delete/:id)
+// Eliminar marca 
 router.get('/delete/:id', async (req, res) => {
     try {
       await db.query("DELETE FROM marcas WHERE idmarca = ?", [req.params.id]);
       res.redirect('/marcas');
     } catch (error) {
-      console.error(error);// Redirige igual aunque falle (sin mensaje)
+      console.error(error);
     }
   });
 
-// Ruta para renderizar el formulario edit
 router.get('/edit/:id', async(req, res) => {
   try {
     const [marcas] = await db.query("SELECT * FROM marcas");
@@ -65,10 +63,8 @@ router.get('/edit/:id', async(req, res) => {
 // Proceso de actualización
 router.post('/edit/:id', async(req, res) => {
   try {
-    // Obtener los datos del formulario
     const { marca } = req.body;
     
-    // Actualizar registro
     await db.query(
       "UPDATE marcas SET marca = ? WHERE idmarca = ?",
       [marca, req.params.id]

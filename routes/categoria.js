@@ -15,12 +15,10 @@ router.get('/', async (req, res) => {
     }
   });
 
-// Mostrar formulario (GET /marcas/create)
 router.get('/create', (req, res) => {
     res.render('categorias/create');
   });
   
-  // Guardar marca (POST /marcas/create)
 router.post('/create', async (req, res) => {
     try {
       const { categoria } = req.body;
@@ -32,17 +30,16 @@ router.post('/create', async (req, res) => {
     }
   });
 
-// Eliminar marca (GET /categorias/delete/:id)
 router.get('/delete/:id', async (req, res) => {
     try {
       await db.query("DELETE FROM categorias WHERE idcategoria = ?", [req.params.id]);
       res.redirect('/categorias');
     } catch (error) {
-      console.error(error);// Redirige igual aunque falle (sin mensaje)
+      console.error(error);// Redirige 
     }
   });
 
-// Ruta para renderizar el formulario edit
+// Ruta para dirigir al formulario edit
 router.get('/edit/:id', async(req, res) => {
   try {
     const [categorias] = await db.query("SELECT * FROM categorias");
@@ -65,10 +62,7 @@ router.get('/edit/:id', async(req, res) => {
 // Proceso de actualización
 router.post('/edit/:id', async(req, res) => {
   try {
-    // Obtener los datos del formulario
     const { categoria } = req.body;
-    
-    // Actualizar registro
     await db.query(
       "UPDATE categorias SET categoria = ? WHERE idcategoria = ?",
       [categoria, req.params.id]

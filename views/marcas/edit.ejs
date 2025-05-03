@@ -11,9 +11,6 @@
         </div>
         
         <div class="card-body">
-          <!-- Cambios importantes: -->
-          <!-- 1. Quitamos enctype="multipart/form-data" (no necesario para texto) -->
-          <!-- 2. Añadimos value con el dato actual -->
           <form action="/marcas/edit/<%= marca.idmarca %>" method="POST" id="formulario-edicion">
             <div class="mb-3">
               <label class="form-label fw-bold">Nombre de la marca</label>

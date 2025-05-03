@@ -10,16 +10,15 @@
     <%- include('partials/header') %>
     
     <div class="container my-5">
-        <div class="row justify-content-center g-4">  <!-- g-4 para espacio entre columnas -->
-            <!-- Card de Consolas -->
-            <div class="col-12 col-md-6 col-lg-4">  <!-- 3 columnas en pantallas grandes -->
-                <div class="card h-100 shadow-sm">  <!-- shadow-sm para sombra ligera -->
-                    <img src="<%= '/images/consolas.png' %>" class="card-img-top img-fluid p-3" alt="imagen-consola">  <!-- img-fluid y p-3 para padding -->
+        <div class="row justify-content-center g-4"> 
+            <div class="col-12 col-md-6 col-lg-4">  
+                <div class="card h-100 shadow-sm">  
+                    <img src="<%= '/images/consolas.png' %>" class="card-img-top img-fluid p-3" alt="imagen-consola"> 
                     <div class="card-body text-center">
                         <h5 class="card-title">Consolas registradas:</h5>
                         <p class="card-text fs-1 fw-bold" id="total-consolas"><%= total %></p>
                     </div>
-                    <div class="card-footer bg-transparent border-0 d-grid gap-2">  <!-- d-grid gap-2 para botones apilados -->
+                    <div class="card-footer bg-transparent border-0 d-grid gap-2">
                         <a href="/create" class="btn btn-success">Agregar consola</a>
                         <a href="/index" class="btn btn-info">Ver consolas</a>
                     </div>
