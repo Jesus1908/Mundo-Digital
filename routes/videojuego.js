@@ -166,4 +166,32 @@ router.post('/update/:id', upload.single('imagenNueva'), async (req, res) => {
   }
 });
 
+// Ruta para mostrar el catálogo
+router.get('/catalogo', async (req, res) => {
+  try {
+    const query = `
+      SELECT 
+        C.titulo,
+        C.descripcion,
+        C.precio,
+        C.flanzamiento,
+        C.peso,
+        C.edadrec,
+        c.imagen,
+        M.marca,
+        CA.categoria,
+        C.imagen
+      FROM videojuegos C
+      INNER JOIN marcas M ON C.idmarca = M.idmarca
+      INNER JOIN categorias CA ON C.idcategoria = CA.idcategoria
+    `;
+    
+    const [videojuegos] = await db.query(query);
+    res.render('catalogo', { videojuegos });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al obtener el catálogo');
+  }
+});
+
 module.exports = router;
