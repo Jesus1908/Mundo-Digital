@@ -169,28 +169,53 @@ router.post('/update/:id', upload.single('imagenNueva'), async (req, res) => {
 // Ruta para mostrar el catálogo
 router.get('/catalogo', async (req, res) => {
   try {
-    const query = `
+    const { titulo, marca, categoria } = req.query;
+
+    let query = `
       SELECT 
+        C.idvideojuego,
         C.titulo,
         C.descripcion,
         C.precio,
         C.flanzamiento,
         C.peso,
         C.edadrec,
-        c.imagen,
+        C.imagen,
         M.marca,
-        CA.categoria,
-        C.imagen
+        CA.categoria
       FROM videojuegos C
       INNER JOIN marcas M ON C.idmarca = M.idmarca
       INNER JOIN categorias CA ON C.idcategoria = CA.idcategoria
+      WHERE 1=1
     `;
-    
-    const [videojuegos] = await db.query(query);
-    res.render('catalogo', { videojuegos });
+
+    const params = [];
+
+    if (titulo) {
+      query += ` AND C.titulo LIKE ?`;
+      params.push(`%${titulo}%`);
+    }
+
+    if (marca) {
+      query += ` AND M.marca = ?`;
+      params.push(marca);
+    }
+
+    if (categoria) {
+      query += ` AND CA.categoria = ?`;
+      params.push(categoria);
+    }
+
+    const [videojuegos] = await db.query(query, params);
+
+    // Obtener todas las marcas y categorías para el formulario
+    const [marcas] = await db.query(`SELECT DISTINCT marca FROM marcas`);
+    const [categorias] = await db.query(`SELECT DISTINCT categoria FROM categorias`);
+
+    res.render('catalogo', { videojuegos, marcas, categorias });
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Error al obtener el catálogo');
+    console.error('Error al filtrar videojuegos:', error);
+    res.status(500).send('Error al filtrar videojuegos');
   }
 });
 
